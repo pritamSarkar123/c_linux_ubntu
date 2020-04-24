@@ -1,0 +1,37 @@
+#include<stdio.h>
+#include<stdarg.h>
+int gcd(int a,int b){
+	int c;
+	c=b%a;
+	if(c==0) return a;
+	else return gcd(c,a);
+}
+int gcdFunction(int arg_count,...){
+	int a,b,i;
+	if(arg_count==0) return 0;
+	va_list arg;
+	va_start(arg,arg_count);
+	if(arg_count==1){
+		a=va_arg(arg,int);
+		va_end(arg);
+		return a;
+	}
+	else{
+		a=va_arg(arg,int);
+		b=va_arg(arg,int);
+		if(b<a){a=a^b;b=a^b;a=a^b;}
+		b=gcd(a,b);
+		for(i=2;i<arg_count;i++){
+			a=va_arg(arg,int);
+			if(b<a){a=a^b;b=a^b;a=a^b;}
+			b=gcd(a,b);
+		}
+		va_end(ar)
+		return b;
+	}
+}
+int main(){
+	int x=gcdFunction(3,30,5,20);
+	printf("%d",x);
+	return 0;
+}
